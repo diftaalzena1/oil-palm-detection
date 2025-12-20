@@ -1,0 +1,2 @@
+total_energy_kwh,total_delta_kcal,total_fuel_saving_kg,total_cost_saving_rp,avg_bpp_saving_rp_kwh,avg_efficiency_pct,avg_load_exo_now,avg_baseline_nphr,avg_optimized_nphr,avg_delta_nphr,total_data_points
+116434446.94511363,5772384222.185001,1400092.2229192846,1293307189.0772307,11.151050224286022,1.792050015681882,322.7566096884647,2757.4254904130394,2707.655298985133,49.77019142790627,1443
