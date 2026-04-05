@@ -1,4 +1,10 @@
 streamlit
-pandas
-plotly
+opencv-python
 numpy
+pillow
+scikit-learn
+sahi
+ultralytics
+plotly
+pandas
+openpyxl

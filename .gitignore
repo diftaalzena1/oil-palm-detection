@@ -1,12 +1,28 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
+
+# Virtual environment
 venv/
-.env
-.DS_Store
-*.log
-.ipynb_checkpoints/
+env/
+ENV/
+
+# IDE
 .vscode/
+.idea/
+
+# Output files
+*.zip
+*.xlsx
+*.csv
+*.png
+*.jpg
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
