@@ -250,7 +250,7 @@ if uploaded_files:
                 return 'background-color: #ffe6cc'
         
         styled_df = (df_res.style
-            .applymap(highlight_status, subset=['Status'])
+            .map(highlight_status, subset=['Status'])
             .set_properties(**{'text-align': 'center'})
             .set_table_styles([
                 {'selector': 'th', 'props': [
