@@ -1,4 +1,5 @@
 # modules/exporter.py
+from config import get_recommendation
 import io
 import zipfile
 import pandas as pd
@@ -25,7 +26,8 @@ def export_to_excel(results_list):
             'Image': r['filename'],
             'Trees': r['total_trees'],
             'Density (trees/ha)': f"{r['density']:.1f}",
-            'Status': r['status']
+            'Status': r['status'],
+            'Recommendation': get_recommendation(r['status'])  # tambah ini
         } for r in results_list]
         pd.DataFrame(summary_data).to_excel(writer, sheet_name='Summary', index=False)
         for r in results_list:
