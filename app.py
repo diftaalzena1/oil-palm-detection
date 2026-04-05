@@ -10,6 +10,7 @@ from datetime import datetime
 
 # Import konfigurasi
 import config
+from config import get_recommendation
 
 # Custom CSS
 st.markdown("""
@@ -238,7 +239,8 @@ if uploaded_files:
             'Image': r['filename'],
             'Trees': r['total_trees'],
             'Density (trees/ha)': f"{r['density']:.1f}",
-            'Status': r['status']
+            'Status': r['status'],
+            'Recommendation': get_recommendation(r['status'])  # tambah ini
         } for r in st.session_state.batch_results])
         
         def highlight_status(val):
@@ -286,16 +288,29 @@ if uploaded_files:
                     if status == "OPTIMAL":
                         chip_color = "#2e7d32"
                         bg_color = "#e8f5e9"
+                        rec_text = "Lanjutkan pengelolaan normal"
                     elif status == "UNDERPOPULATED":
                         chip_color = "#c62828"
                         bg_color = "#ffebee"
+                        rec_text = "Perlu penanaman ulang (replanting) di area kosong"
                     else:
                         chip_color = "#ed6c02"
                         bg_color = "#fff4e5"
+                        rec_text = "Perlu pemanenan atau penjarangan (thinning)"
+                    
+                    # Status chip
                     st.markdown(f"""
                         <div style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; background-color: {bg_color}; border-radius: 20px; text-align: center;">
                             <span style="color: {chip_color}; font-weight: 500; font-size: 0.8rem;">Status</span><br>
                             <span style="color: #1e293b; font-weight: 600; font-size: 0.9rem;">{status}</span>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+                    # Rekomendasi dengan warna yang sama
+                    st.markdown(f"""
+                        <div style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; background-color: {bg_color}; border-radius: 20px; text-align: center;">
+                            <span style="color: {chip_color}; font-weight: 500; font-size: 0.8rem;">Rekomendasi</span><br>
+                            <span style="color: #1e293b; font-weight: 500; font-size: 0.85rem;">{rec_text}</span>
                         </div>
                     """, unsafe_allow_html=True)
                 
