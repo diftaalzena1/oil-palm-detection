@@ -65,19 +65,59 @@ def image_grid_with_selection(uploaded_files, MAX_BATCH_WARNING):
     
     return selected
 
-def plot_interactive_map(coords, img_shape):
+def plot_interactive_map(coords, img_shape, max_size=700):
+    """
+    Menampilkan tree map dengan proporsi yang sama persis dengan gambar asli.
+    
+    Parameters:
+    - coords: list of (x, y) koordinat pohon
+    - img_shape: (height, width) gambar asli
+    - max_size: ukuran maksimal sisi terpanjang (pixel)
+    """
     if not coords:
         return None
+    
+    h, w = img_shape
     df = pd.DataFrame(coords, columns=['x', 'y'])
-    fig = px.scatter(df, x='x', y='y', title=f"Tree Map ({len(coords)} trees)",
-                     labels={'x': 'X (px)', 'y': 'Y (px)'}, width=700, height=500)
-    fig.update_yaxes(autorange="reversed")
-    fig.update_traces(marker=dict(size=8, color='#2c6e49', line=dict(width=1, color='white')))
-    fig.update_layout(
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        font=dict(color='#1e293b')
+    
+    # Hitung ukuran plot berdasarkan rasio gambar
+    if w >= h:
+        plot_width = max_size
+        plot_height = int(max_size * h / w)
+    else:
+        plot_height = max_size
+        plot_width = int(max_size * w / h)
+    
+    fig = px.scatter(
+        df, x='x', y='y', 
+        title=f"Tree Map ({len(coords)} trees) - Rasio {w}x{h}",
+        labels={'x': 'X (px)', 'y': 'Y (px)'}, 
+        width=plot_width,
+        height=plot_height
     )
+    
+    fig.update_yaxes(autorange="reversed")
+    
+    # Pastikan rasio aspek 1:1 (1 pixel = 1 unit)
+    fig.update_layout(
+        plot_bgcolor='white', 
+        paper_bgcolor='white',
+        font=dict(color='#1e293b'),
+        xaxis=dict(
+            scaleanchor="y",  # Sumbu X mengikuti sumbu Y
+            scaleratio=1,     # 1 unit X = 1 unit Y
+            constrain="domain"
+        ),
+        yaxis=dict(
+            scaleanchor="x",
+            scaleratio=1
+        )
+    )
+    
+    fig.update_traces(
+        marker=dict(size=8, color='#2c6e49', line=dict(width=1, color='white'))
+    )
+    
     return fig
 
 def display_metric_card(label, value, bg_color, text_color="white"):
