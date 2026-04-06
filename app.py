@@ -317,7 +317,8 @@ if uploaded_files:
                 if res['coords']:
                     show_map = st.checkbox(f"🗺️ Show Tree Map", key=f"show_map_{idx}")
                     if show_map:
-                        st.plotly_chart(plot_interactive_map(res['coords'], res['img_shape']), use_container_width=True)
+                        # Hapus use_container_width=True agar ukuran mengikuti plot
+                        st.plotly_chart(plot_interactive_map(res['coords'], res['img_shape']), use_container_width=False)
                 
                 if res['slice_previews']:
                     total_slices = len(res['slice_previews'])
